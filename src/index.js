@@ -1,5 +1,5 @@
 import React from 'react';
-// import ReactDOM from 'react-dom/client'; this shit does not work
+// import ReactDOM from 'react-dom/client'; this sh!t does not work
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
