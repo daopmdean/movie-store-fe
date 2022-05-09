@@ -43,22 +43,17 @@ export default function App() {
                 <Movies />
               </Route>
 
-              <Route path="/by-category">
-                <CategoryPage />
-              </Route>
+              <Route exact path="/by-category" component={CategoryPage} />
               <Route
                 exact
                 path="/by-category/drama"
                 render={(props) => <Categories {...props} title={`Drama`} />}
               />
-              {/* <Route
+              <Route
                 exact
                 path="/by-category/comedy"
                 render={(props) => <Home />}
-              /> */}
-              <Route path="/by-category/comedy">
-                <Admin />
-              </Route>
+              />
 
               <Route path="/admin">
                 <Admin />
