@@ -1,6 +1,5 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-import { Fragment } from "react/cjs/react.production.min";
 
 class Categories extends Component {
   state = {

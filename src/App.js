@@ -43,17 +43,7 @@ export default function App() {
                 <Movies />
               </Route>
 
-              <Route exact path="/by-category" component={CategoryPage} />
-              <Route
-                exact
-                path="/by-category/drama"
-                render={(props) => <Categories {...props} title={`Drama`} />}
-              />
-              <Route
-                exact
-                path="/by-category/comedy"
-                render={(props) => <Home />}
-              />
+              <Route exact path="/by-category" component={Categories} />
 
               <Route path="/admin">
                 <Admin />
@@ -64,25 +54,5 @@ export default function App() {
         </div>
       </div>
     </Router>
-  );
-}
-
-function CategoryPage() {
-  let { path, url } = useRouteMatch();
-  return (
-    <div>
-      <h2>Categories</h2>
-      <ul>
-        <li>
-          <Link to={`${path}/comedy`}>Comedy</Link>
-        </li>
-        <li>
-          <Link to={`${url}/drama`}>Drama</Link>
-        </li>
-        <li>
-          <Link to="/movies">Drama</Link>
-        </li>
-      </ul>
-    </div>
   );
 }
