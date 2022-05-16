@@ -1,10 +1,10 @@
 import React from "react";
-import { useRouteMatch } from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Admin from "./components/Admin";
 import Categories from "./components/Categories";
 import Home from "./components/Home";
 import Movies from "./components/Movies";
+import OneGenre from "./components/OneGenre";
 import OneMovie from "./components/OneMovie";
 
 export default function App() {
@@ -27,7 +27,7 @@ export default function App() {
                   <Link to="/movies">Movies</Link>
                 </li>
                 <li className="list-group-item">
-                  <Link to="/by-category">Categories</Link>
+                  <Link to="/categories">Categories</Link>
                 </li>
                 <li className="list-group-item  ">
                   <Link to="/admin">Manage Catalogue</Link>
@@ -43,7 +43,8 @@ export default function App() {
                 <Movies />
               </Route>
 
-              <Route exact path="/by-category" component={Categories} />
+              <Route exact path="/categories" component={Categories} />
+              <Route exact path="/categories/:id" component={OneGenre} />
 
               <Route path="/admin">
                 <Admin />

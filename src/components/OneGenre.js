@@ -1,15 +1,15 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 
-class Categories extends Component {
+export default class OneGenre extends Component {
   state = {
-    genres: [],
+    movies: [],
     isLoaded: false,
     error: null,
   };
 
   componentDidMount() {
-    fetch("http://localhost:4000/v1/genres")
+    fetch("http://localhost:4000/v1/movies-genre/" + this.props.match.params.id)
       .then((res) => {
         console.log("Response code: " + res.status);
 
@@ -25,7 +25,7 @@ class Categories extends Component {
       .then((json) => {
         this.setState(
           {
-            genres: json.genres,
+            movies: json.movies,
             isLoaded: true,
           },
           (error) => {
@@ -39,7 +39,11 @@ class Categories extends Component {
   }
 
   render() {
-    const { genres, isLoaded, error } = this.state;
+    let { movies, isLoaded, error } = this.state;
+
+    if (!movies) {
+      movies = [];
+    }
 
     if (error) {
       return <p>Error: {error.message}</p>;
@@ -51,17 +55,19 @@ class Categories extends Component {
 
     return (
       <Fragment>
-        <h2>Categories {this.props.title}</h2>
-        <ul>
-          {genres.map((g) => (
-            <li key={g.id}>
-              <Link to={`/categories/${g.id}`}>{g.genreName}</Link>
-            </li>
+        <h2>Genre:</h2>
+
+        <div className="list-group">
+          {movies.map((m) => (
+            <Link
+              to={`/movies/${m.id}`}
+              className="list-group-item list-group-item-action"
+            >
+              {m.title}
+            </Link>
           ))}
-        </ul>
+        </div>
       </Fragment>
     );
   }
 }
-
-export default Categories;
