@@ -52,13 +52,17 @@ class Movies extends Component {
     return (
       <Fragment>
         <h2>Choose Movies</h2>
-        <ul>
+        <div className="list-group">
           {movies.map((m) => (
-            <li key={m.id}>
-              <Link to={`/movies/${m.id}`}>{m.title}</Link>
-            </li>
+            <Link
+              key={m.id}
+              to={`/movies/${m.id}`}
+              className="list-group-item list-group-item-action"
+            >
+              {m.title}
+            </Link>
           ))}
-        </ul>
+        </div>
       </Fragment>
     );
   }

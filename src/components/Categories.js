@@ -52,20 +52,21 @@ class Categories extends Component {
     return (
       <Fragment>
         <h2>Categories {this.props.title}</h2>
-        <ul>
+
+        <div className="list-group">
           {genres.map((g) => (
-            <li key={g.id}>
-              <Link
-                to={{
-                  pathname: `/categories/${g.id}`,
-                  genreName: g.genreName,
-                }}
-              >
-                {g.genreName}
-              </Link>
-            </li>
+            <Link
+              key={g.id}
+              to={{
+                pathname: `/categories/${g.id}`,
+                genreName: g.genreName,
+              }}
+              className="list-group-item list-group-item-action"
+            >
+              {g.genreName}
+            </Link>
           ))}
-        </ul>
+        </div>
       </Fragment>
     );
   }
