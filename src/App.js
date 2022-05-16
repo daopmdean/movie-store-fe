@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Admin from "./components/Admin";
 import Categories from "./components/Categories";
+import EditMovie from "./components/EditMovie";
 import Home from "./components/Home";
 import Movies from "./components/Movies";
 import OneGenre from "./components/OneGenre";
@@ -29,7 +30,10 @@ export default function App() {
                 <li className="list-group-item">
                   <Link to="/categories">Categories</Link>
                 </li>
-                <li className="list-group-item  ">
+                <li className="list-group-item">
+                  <Link to="/admin/add">Add Movie</Link>
+                </li>
+                <li className="list-group-item">
                   <Link to="/admin">Manage Catalogue</Link>
                 </li>
               </ul>
@@ -46,6 +50,7 @@ export default function App() {
               <Route exact path="/categories" component={Categories} />
               <Route exact path="/categories/:id" component={OneGenre} />
 
+              <Route path="/admin/add" component={EditMovie} />
               <Route path="/admin">
                 <Admin />
               </Route>
