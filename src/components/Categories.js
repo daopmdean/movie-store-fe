@@ -55,7 +55,14 @@ class Categories extends Component {
         <ul>
           {genres.map((g) => (
             <li key={g.id}>
-              <Link to={`/categories/${g.id}`}>{g.genreName}</Link>
+              <Link
+                to={{
+                  pathname: `/categories/${g.id}`,
+                  genreName: g.genreName,
+                }}
+              >
+                {g.genreName}
+              </Link>
             </li>
           ))}
         </ul>
