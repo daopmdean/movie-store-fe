@@ -26,6 +26,7 @@ class EditMovie extends Component {
       ],
       isLoaded: false,
       error: null,
+      errors: [],
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -34,6 +35,22 @@ class EditMovie extends Component {
 
   handleSubmit = (evt) => {
     evt.preventDefault();
+
+    let errors = [];
+    if (this.state.movie.title === "") {
+      errors.push("title");
+    }
+    if (this.state.movie.runtime === "") {
+      errors.push("runtime");
+    }
+    if (this.state.movie.description === "") {
+      errors.push("description");
+    }
+
+    this.setState({ errors: errors });
+    if (errors.length > 0) {
+      return false;
+    }
 
     const data = new FormData(evt.target);
     const payload = Object.fromEntries(data.entries());
@@ -60,6 +77,10 @@ class EditMovie extends Component {
       },
     }));
   };
+
+  hasError(key) {
+    return this.state.errors.indexOf(key) !== -1;
+  }
 
   componentDidMount() {
     const id = this.props.match.params.id;
@@ -128,6 +149,9 @@ class EditMovie extends Component {
             name={"title"}
             value={movie.title}
             handleChange={this.handleChange}
+            className={this.hasError("title") ? "is-invalid" : ""}
+            errDiv={this.hasError("title") ? "text-danger" : "d-none"}
+            errMsg={"Please enter title"}
           />
 
           <Input
@@ -144,6 +168,9 @@ class EditMovie extends Component {
             name={"runtime"}
             value={movie.runtime}
             handleChange={this.handleChange}
+            className={this.hasError("runtime") ? "is-invalid" : ""}
+            errDiv={this.hasError("runtime") ? "text-danger" : "d-none"}
+            errMsg={"Please enter runtime"}
           />
 
           <Select
@@ -169,6 +196,9 @@ class EditMovie extends Component {
             value={movie.description}
             rows={"3"}
             handleChange={this.handleChange}
+            className={this.hasError("description") ? "is-invalid" : ""}
+            errDiv={this.hasError("description") ? "text-danger" : "d-none"}
+            errMsg={"Please enter description"}
           />
 
           <hr></hr>
