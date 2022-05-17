@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import Alert from "./Alert";
 import "./EditMovie.css";
 import Input from "./form-components/Input";
 import Select from "./form-components/Select";
@@ -27,59 +28,14 @@ class EditMovie extends Component {
       isLoaded: false,
       error: null,
       errors: [],
+      alert: {
+        type: "d-none",
+        message: "",
+      },
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleSubmit = (evt) => {
-    evt.preventDefault();
-
-    let errors = [];
-    if (this.state.movie.title === "") {
-      errors.push("title");
-    }
-    if (this.state.movie.runtime === "") {
-      errors.push("runtime");
-    }
-    if (this.state.movie.description === "") {
-      errors.push("description");
-    }
-
-    this.setState({ errors: errors });
-    if (errors.length > 0) {
-      return false;
-    }
-
-    const data = new FormData(evt.target);
-    const payload = Object.fromEntries(data.entries());
-
-    const requestOptions = {
-      method: "POST",
-      body: JSON.stringify(payload),
-    };
-
-    fetch("http://localhost:4000/v1/admin/editmovie", requestOptions)
-      .then((res) => res.json())
-      .then((json) => {
-        console.log(json);
-      });
-  };
-
-  handleChange = (evt) => {
-    let value = evt.target.value;
-    let name = evt.target.name;
-    this.setState((prevState) => ({
-      movie: {
-        ...prevState.movie,
-        [name]: value,
-      },
-    }));
-  };
-
-  hasError(key) {
-    return this.state.errors.indexOf(key) !== -1;
   }
 
   componentDidMount() {
@@ -126,6 +82,69 @@ class EditMovie extends Component {
         isLoaded: true,
       });
     }
+  }
+
+  handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    let errors = [];
+    if (this.state.movie.title === "") {
+      errors.push("title");
+    }
+    if (this.state.movie.runtime === "") {
+      errors.push("runtime");
+    }
+    if (this.state.movie.description === "") {
+      errors.push("description");
+    }
+
+    this.setState({ errors: errors });
+    if (errors.length > 0) {
+      return false;
+    }
+
+    const data = new FormData(evt.target);
+    const payload = Object.fromEntries(data.entries());
+
+    const requestOptions = {
+      method: "POST",
+      body: JSON.stringify(payload),
+    };
+
+    fetch("http://localhost:4000/v1/admin/editmovie", requestOptions)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          this.setState({
+            alert: {
+              type: "alert-danger",
+              message: data.error.message,
+            },
+          });
+        } else {
+          this.setState({
+            alert: {
+              type: "alert-success",
+              message: "Changes saved!",
+            },
+          });
+        }
+      });
+  };
+
+  handleChange = (evt) => {
+    let value = evt.target.value;
+    let name = evt.target.name;
+    this.setState((prevState) => ({
+      movie: {
+        ...prevState.movie,
+        [name]: value,
+      },
+    }));
+  };
+
+  hasError(key) {
+    return this.state.errors.indexOf(key) !== -1;
   }
 
   render() {
@@ -205,6 +224,10 @@ class EditMovie extends Component {
 
           <button className="btn btn-primary">Save</button>
         </form>
+        <Alert
+          alertType={this.state.alert.type}
+          alertMessage={this.state.alert.message}
+        />
 
         <div className="mt-3">
           <pre>{JSON.stringify(this.state, null, 3)}</pre>
