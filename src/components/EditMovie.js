@@ -1,25 +1,29 @@
 import React, { Component, Fragment } from "react";
 import "./EditMovie.css";
+import Input from "./form-components/Input";
+import Select from "./form-components/Select";
+import Textarea from "./form-components/Textarea";
 
 class EditMovie extends Component {
-  state = {
-    movie: {},
-    isLoaded: false,
-    error: null,
-  };
-
   constructor(props) {
     super(props);
     this.state = {
       movie: {
         id: 0,
         title: "",
-        release_date: "",
+        releaseDate: "",
         runtime: "",
-        mpaa_rating: "",
+        mpaaRating: "",
         rating: "",
         description: "",
       },
+      mpaaOptions: [
+        { value: "G", name: "G" },
+        { value: "PG", name: "PG" },
+        { value: "PG14", name: "PG14" },
+        { value: "R", name: "R" },
+        { value: "NC17", name: "NC17" },
+      ],
       isLoaded: false,
       error: null,
     };
@@ -45,11 +49,49 @@ class EditMovie extends Component {
   };
 
   componentDidMount() {
-    this.setState({
-      movie: {
-        title: "Lks",
-      },
-    });
+    const id = this.props.match.params.id;
+    if (id > 0) {
+      fetch("http://localhost:4000/v1/movies/" + id)
+        .then((res) => {
+          console.log("Response code: " + res.status);
+
+          if (res.status !== 200) {
+            let err = Error;
+            err.message = "Invalid response code: " + res.status;
+            this.setState({
+              error: err,
+            });
+          }
+          return res.json();
+        })
+        .then((json) => {
+          const releaseDate = new Date(json.movie.releaseDate);
+          this.setState(
+            {
+              movie: {
+                id: json.movie.id,
+                title: json.movie.title,
+                releaseDate: releaseDate.toISOString().split("T")[0],
+                runtime: json.movie.runtime,
+                mpaaRating: json.movie.mpaaRating,
+                rating: json.movie.rating,
+                description: json.movie.description,
+              },
+              isLoaded: true,
+            },
+            (error) => {
+              this.setState({
+                isLoaded: true,
+                error,
+              });
+            }
+          );
+        });
+    } else {
+      this.setState({
+        isLoaded: true,
+      });
+    }
   }
 
   render() {
@@ -67,103 +109,54 @@ class EditMovie extends Component {
             onChange={this.handleChange}
           />
 
-          <div className="md-3">
-            <label htmlFor="title" className="form-label">
-              Title
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="title"
-              name="title"
-              value={movie.title}
-              onChange={this.handleChange}
-            />
-          </div>
+          <Input
+            title={"Title"}
+            type={"text"}
+            name={"title"}
+            value={movie.title}
+            handleChange={this.handleChange}
+          />
 
-          <div className="md-3">
-            <label htmlFor="release_date" className="form-label">
-              Release Date
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="release_date"
-              name="release_date"
-              value={movie.releaseDate}
-              onChange={this.handleChange}
-            />
-          </div>
+          <Input
+            title={"Release Date"}
+            type={"date"}
+            name={"releaseDate"}
+            value={movie.releaseDate}
+            handleChange={this.handleChange}
+          />
 
-          <div className="md-3">
-            <label htmlFor="runtime" className="form-label">
-              Runtime
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="runtime"
-              name="runtime"
-              value={movie.runtime}
-              onChange={this.handleChange}
-            />
-          </div>
+          <Input
+            title={"Runtime"}
+            type={"text"}
+            name={"runtime"}
+            value={movie.runtime}
+            handleChange={this.handleChange}
+          />
 
-          <div className="md-3">
-            <label htmlFor="runtime" className="form-label">
-              MPAA Rating
-            </label>
-            <select
-              className="form-select"
-              name="mpaa_rating"
-              value={movie.mpaaRating}
-              onChange={this.handleChange}
-            >
-              <option className="form-select">Choose...</option>
-              <option className="form-select" value="G">
-                G
-              </option>
-              <option className="form-select" value="PG">
-                PG
-              </option>
-              <option className="form-select" value="PG14">
-                PG14
-              </option>
-              <option className="form-select" value="R">
-                R
-              </option>
-              <option className="form-select" value="NC17">
-                NC17
-              </option>
-            </select>
-          </div>
+          <Select
+            title={"MPAA Rating"}
+            name={"mpaaRating"}
+            placeholder={"Choose..."}
+            value={movie.mpaaRating}
+            options={this.state.mpaaOptions}
+            handleChange={this.handleChange}
+          />
 
-          <div className="md-3">
-            <label htmlFor="rating" className="form-label">
-              Rating
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="rating"
-              name="rating"
-              value={movie.rating}
-              onChange={this.handleChange}
-            />
-          </div>
+          <Input
+            title={"Rating"}
+            type={"text"}
+            name={"rating"}
+            value={movie.rating}
+            handleChange={this.handleChange}
+          />
 
-          <div className="md-3">
-            <label htmlFor="description" className="form-label">
-              Description
-            </label>
-            <textarea
-              className="form-control"
-              id="description"
-              name="description"
-              value={movie.description}
-              onChange={this.handleChange}
-            />
-          </div>
+          <Textarea
+            title={"Description"}
+            name={"description"}
+            value={movie.description}
+            rows={"3"}
+            handleChange={this.handleChange}
+          />
 
           <hr></hr>
 
