@@ -19,6 +19,15 @@ export default class App extends Component {
     this.handleJWTChange = this.handleJWTChange.bind(this);
   }
 
+  componentDidMount() {
+    let localToken = window.localStorage.getItem("jwt");
+    if (this.state.jwt === "") {
+      this.setState({
+        jwt: JSON.parse(localToken),
+      });
+    }
+  }
+
   handleJWTChange = (jwt) => {
     this.setState({
       jwt: jwt,
@@ -26,6 +35,7 @@ export default class App extends Component {
   };
 
   logout = () => {
+    window.localStorage.removeItem("jwt");
     this.setState({
       jwt: "",
     });

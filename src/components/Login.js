@@ -67,6 +67,7 @@ export default class Login extends Component {
           });
         } else {
           this.handleJWTChange(data.token);
+          window.localStorage.setItem("jwt", JSON.stringify(data.token));
           this.props.history.push({ pathname: "/admin" });
         }
       });
