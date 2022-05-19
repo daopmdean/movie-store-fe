@@ -42,6 +42,11 @@ class EditMovie extends Component {
   }
 
   componentDidMount() {
+    if (this.props.jwt === "") {
+      this.props.history.push({ pathname: "/login" });
+      return;
+    }
+
     const id = this.props.match.params.id;
     if (id > 0) {
       fetch("http://localhost:4000/v1/movies/" + id)
@@ -108,9 +113,13 @@ class EditMovie extends Component {
 
     const data = new FormData(evt.target);
     const payload = Object.fromEntries(data.entries());
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("Authorization", "Bearer " + this.props.jwt);
 
     const requestOptions = {
       method: "POST",
+      headers: headers,
       body: JSON.stringify(payload),
     };
 
@@ -149,10 +158,13 @@ class EditMovie extends Component {
         {
           label: "Yes",
           onClick: () => {
+            const headers = new Headers();
+            headers.append("Content-Type", "application/json");
+            headers.append("Authorization", "Bearer " + this.props.jwt);
             fetch(
               "http://localhost:4000/v1/admin/deletemovie/" +
                 this.state.movie.id,
-              { method: "GET" }
+              { method: "GET", headers: headers }
             )
               .then((res) => res.json())
               .then((json) => {
