@@ -1,9 +1,12 @@
 import React, { Component, Fragment } from "react";
+import { confirmAlert } from "react-confirm-alert";
+import { Link } from "react-router-dom";
 import Alert from "./Alert";
-import "./EditMovie.css";
 import Input from "./form-components/Input";
 import Select from "./form-components/Select";
 import Textarea from "./form-components/Textarea";
+import "./EditMovie.css";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 class EditMovie extends Component {
   constructor(props) {
@@ -122,12 +125,7 @@ class EditMovie extends Component {
             },
           });
         } else {
-          this.setState({
-            alert: {
-              type: "alert-success",
-              message: "Changes saved!",
-            },
-          });
+          this.props.history.push({ pathname: "/admin" });
         }
       });
   };
@@ -141,6 +139,42 @@ class EditMovie extends Component {
         [name]: value,
       },
     }));
+  };
+
+  confirmDelete = (evt) => {
+    confirmAlert({
+      title: "Delete Movie?",
+      message: "Are you sure to delete " + this.state.movie.title,
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => {
+            fetch(
+              "http://localhost:4000/v1/admin/deletemovie/" +
+                this.state.movie.id,
+              { method: "GET" }
+            )
+              .then((res) => res.json())
+              .then((json) => {
+                if (json.error) {
+                  this.setState({
+                    alert: {
+                      type: "alert-danger",
+                      message: json.error.message,
+                    },
+                  });
+                } else {
+                  this.props.history.push({ pathname: "/admin" });
+                }
+              });
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
   };
 
   hasError(key) {
@@ -223,15 +257,23 @@ class EditMovie extends Component {
           <hr></hr>
 
           <button className="btn btn-primary">Save</button>
+          <Link to={`/admin`} className="btn btn-warning ms-1">
+            Cancel
+          </Link>
+          {movie.id > 0 && (
+            <a
+              href="#!"
+              className="btn btn-danger ms-1"
+              onClick={this.confirmDelete}
+            >
+              Delete
+            </a>
+          )}
         </form>
         <Alert
           alertType={this.state.alert.type}
           alertMessage={this.state.alert.message}
         />
-
-        <div className="mt-3">
-          <pre>{JSON.stringify(this.state, null, 3)}</pre>
-        </div>
       </Fragment>
     );
   }
