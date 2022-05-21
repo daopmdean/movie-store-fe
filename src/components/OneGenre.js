@@ -10,7 +10,10 @@ export default class OneGenre extends Component {
   };
 
   componentDidMount() {
-    fetch("http://localhost:4000/v1/movies-genre/" + this.props.match.params.id)
+    fetch(
+      `${process.env.REACT_APP_API_URL}/v1/movies-genre/` +
+        this.props.match.params.id
+    )
       .then((res) => {
         console.log("Response code: " + res.status);
 

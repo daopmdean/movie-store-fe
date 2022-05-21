@@ -33,7 +33,7 @@ export default class OneMovieGraphQL extends Component {
       body: query,
     };
 
-    fetch("http://localhost:4000/graphql", requestOptions)
+    fetch(`${process.env.REACT_APP_API_URL}/graphql`, requestOptions)
       .then((res) => {
         console.log("Response code: " + res.status);
 

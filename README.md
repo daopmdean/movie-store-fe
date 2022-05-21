@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Setup api url
+
+```
+export REACT_APP_API_URL='http://localhost:4000'
+```
+
 ## Available Scripts
 
 In the project directory, you can run:

@@ -9,7 +9,7 @@ class Categories extends Component {
   };
 
   componentDidMount() {
-    fetch("http://localhost:4000/v1/genres")
+    fetch(`${process.env.REACT_APP_API_URL}/v1/genres`)
       .then((res) => {
         console.log("Response code: " + res.status);
 

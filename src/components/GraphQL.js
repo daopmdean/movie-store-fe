@@ -66,7 +66,7 @@ export default class GraphQL extends Component {
       body: query,
     };
 
-    fetch("http://localhost:4000/graphql", requestOptions)
+    fetch(`${process.env.REACT_APP_API_URL}/graphql`, requestOptions)
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
