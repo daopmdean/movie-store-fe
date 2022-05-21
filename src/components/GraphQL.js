@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import Input from "./form-components/Input";
 
 export default class GraphQL extends Component {
   constructor(props) {
@@ -11,8 +12,32 @@ export default class GraphQL extends Component {
         type: "d-none",
         message: "",
       },
+      searchTerm: "",
     };
   }
+
+  handleChange = (evt) => {
+    let value = evt.target.value;
+    this.setState(
+      {
+        searchTerm: value,
+      },
+      () => {
+        const query = `
+      {
+        search(titleContains: "${this.state.searchTerm}") {
+          id
+          title
+          runtime
+          year
+          description
+        }
+      }
+      `;
+        this.handleQuery(query, "search");
+      }
+    );
+  };
 
   componentDidMount() {
     const query = `
@@ -27,6 +52,10 @@ export default class GraphQL extends Component {
     }
     `;
 
+    this.handleQuery(query, "list");
+  }
+
+  handleQuery(query, type) {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
 
@@ -47,9 +76,15 @@ export default class GraphQL extends Component {
             },
           });
         } else {
-          this.setState({
-            movies: data.data.list,
-          });
+          if (type === "list") {
+            this.setState({
+              movies: data.data.list,
+            });
+          } else if (type === "search") {
+            this.setState({
+              movies: data.data.search,
+            });
+          }
         }
       });
   }
@@ -60,6 +95,15 @@ export default class GraphQL extends Component {
       <Fragment>
         <h2>GraphQL</h2>
         <hr />
+
+        <Input
+          title={"Search"}
+          type={"text"}
+          name={"search"}
+          value={this.state.searchTerm}
+          handleChange={this.handleChange}
+        />
+
         <div className="list-group">
           {movies.map((movie) => (
             <a
