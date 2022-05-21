@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import Movies from "./components/Movies";
 import OneGenre from "./components/OneGenre";
 import OneMovie from "./components/OneMovie";
+import OneMovieGraphQL from "./components/OneMovieGraphQL";
 
 export default class App extends Component {
   constructor(props) {
@@ -104,6 +105,10 @@ export default class App extends Component {
             <div className="col-md-10">
               <Switch>
                 <Route path="/movies/:id" component={OneMovie} />
+                <Route
+                  path="/movies-graphql/:id"
+                  component={(props) => <OneMovieGraphQL {...props} />}
+                />
                 <Route path="/movies">
                   <Movies />
                 </Route>

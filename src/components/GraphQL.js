@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { Link } from "react-router-dom";
 import Input from "./form-components/Input";
 
 export default class GraphQL extends Component {
@@ -106,8 +107,8 @@ export default class GraphQL extends Component {
 
         <div className="list-group">
           {movies.map((movie) => (
-            <a
-              href="#!"
+            <Link
+              to={`/movies-graphql/${movie.id}`}
               key={movie.id}
               className="list-group-item list-group-item-action"
             >
@@ -118,7 +119,7 @@ export default class GraphQL extends Component {
               </small>
               <br />
               {movie.description}
-            </a>
+            </Link>
           ))}
         </div>
       </Fragment>
