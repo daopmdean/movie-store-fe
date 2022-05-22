@@ -2,10 +2,21 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Source code for back-end [here](https://github.com/daopmdean/movie-store-be)
+
 ## Setup api url
+
+Connect to local api
 
 ```
 export REACT_APP_API_URL='http://localhost:4000'
+```
+
+Build app for deployment
+
+```
+export REACT_APP_API_URL='https://yourapi.com'
+npm run build
 ```
 
 ## Available Scripts
