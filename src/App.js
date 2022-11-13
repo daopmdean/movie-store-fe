@@ -7,7 +7,7 @@ import GraphQL from "./components/GraphQL";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import MoviesFunc from "./components/MoviesFunc";
-import OneGenre from "./components/OneGenre";
+import OneGenreFunc from "./components/OneGenreFunc";
 import OneMovieFunc from "./components/OneMovieFunc";
 import OneMovieGraphQL from "./components/OneMovieGraphQL";
 
@@ -122,7 +122,7 @@ export default class App extends Component {
                 />
 
                 <Route exact path="/categories" component={CategoriesFunc} />
-                <Route exact path="/categories/:id" component={OneGenre} />
+                <Route exact path="/categories/:id" component={OneGenreFunc} />
 
                 <Route
                   path="/admin/movie/:id"
