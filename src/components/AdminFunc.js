@@ -23,7 +23,7 @@ export default function AdminFunc(props) {
       .then((json) => {
         setMovies(json.movies);
       });
-  }, []);
+  }, [props.jwt, props.history]);
 
   if (error !== null) {
     return <p>Error: {error.message}</p>;

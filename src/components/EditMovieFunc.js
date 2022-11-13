@@ -166,7 +166,7 @@ export default function EditMovieFunc(props) {
           id="id"
           name="id"
           value={movie.id}
-          onChange={movie.id}
+          onChange={handleChange("id")}
         />
 
         <Input
