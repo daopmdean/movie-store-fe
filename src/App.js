@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Admin from "./components/Admin";
-import Categories from "./components/Categories";
+import CategoriesFunc from "./components/CategoriesFunc";
 import EditMovie from "./components/EditMovie";
 import GraphQL from "./components/GraphQL";
 import Home from "./components/Home";
@@ -121,7 +121,7 @@ export default class App extends Component {
                   )}
                 />
 
-                <Route exact path="/categories" component={Categories} />
+                <Route exact path="/categories" component={CategoriesFunc} />
                 <Route exact path="/categories/:id" component={OneGenre} />
 
                 <Route

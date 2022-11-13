@@ -1,12 +1,12 @@
-import { useEffect, useState, Fragment } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { Link } from "react-router-dom";
 
-export default function MoviesFunc(props) {
-  const [movies, setMovies] = useState([]);
-  const [error, setError] = useState(null);
+export default function CategoriesFunc(props) {
+  const [genres, setGenres] = useState([]);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/v1/movies`)
+    fetch(`${process.env.REACT_APP_API_URL}/v1/genres`)
       .then((res) => {
         console.log("Response code: " + res.status);
 
@@ -18,25 +18,29 @@ export default function MoviesFunc(props) {
         return res.json();
       })
       .then((json) => {
-        setMovies(json.movies);
+        setGenres(json.genres);
       });
   }, []);
 
   if (error !== null) {
-    return <div>Error: {error.message}</div>;
+    return <p>Error: {error.message}</p>;
   }
 
   return (
     <Fragment>
-      <h2>Choose Movies</h2>
+      <h2>Categories</h2>
+
       <div className="list-group">
-        {movies.map((m) => (
+        {genres.map((g) => (
           <Link
-            key={m.id}
-            to={`/movies/${m.id}`}
+            key={g.id}
+            to={{
+              pathname: `/categories/${g.id}`,
+              genreName: g.genreName,
+            }}
             className="list-group-item list-group-item-action"
           >
-            {m.title}
+            {g.genreName}
           </Link>
         ))}
       </div>
