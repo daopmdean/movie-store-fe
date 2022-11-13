@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Admin from "./components/Admin";
+import AdminFunc from "./components/AdminFunc";
 import CategoriesFunc from "./components/CategoriesFunc";
 import EditMovieFunc from "./components/EditMovieFunc";
 import GraphQL from "./components/GraphQL";
@@ -133,7 +133,7 @@ export default class App extends Component {
                 <Route
                   path="/admin"
                   component={(props) => (
-                    <Admin {...props} jwt={this.state.jwt} />
+                    <AdminFunc {...props} jwt={this.state.jwt} />
                   )}
                 />
 
