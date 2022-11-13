@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Admin from "./components/Admin";
 import CategoriesFunc from "./components/CategoriesFunc";
-import EditMovie from "./components/EditMovie";
+import EditMovieFunc from "./components/EditMovieFunc";
 import GraphQL from "./components/GraphQL";
 import Home from "./components/Home";
 import Login from "./components/Login";
@@ -127,7 +127,7 @@ export default class App extends Component {
                 <Route
                   path="/admin/movie/:id"
                   component={(props) => (
-                    <EditMovie {...props} jwt={this.state.jwt} />
+                    <EditMovieFunc {...props} jwt={this.state.jwt} />
                   )}
                 />
                 <Route
