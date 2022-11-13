@@ -5,7 +5,7 @@ import CategoriesFunc from "./components/CategoriesFunc";
 import EditMovieFunc from "./components/EditMovieFunc";
 import GraphQL from "./components/GraphQL";
 import Home from "./components/Home";
-import Login from "./components/Login";
+import LoginFunc from "./components/LoginFunc";
 import MoviesFunc from "./components/MoviesFunc";
 import OneGenreFunc from "./components/OneGenreFunc";
 import OneMovieFunc from "./components/OneMovieFunc";
@@ -117,7 +117,10 @@ export default class App extends Component {
                   exact
                   path="/login"
                   component={(props) => (
-                    <Login {...props} handleJWTChange={this.handleJWTChange} />
+                    <LoginFunc
+                      {...props}
+                      handleJWTChange={this.handleJWTChange}
+                    />
                   )}
                 />
 
