@@ -6,7 +6,7 @@ import EditMovie from "./components/EditMovie";
 import GraphQL from "./components/GraphQL";
 import Home from "./components/Home";
 import Login from "./components/Login";
-import Movies from "./components/Movies";
+import MoviesFunc from "./components/MoviesFunc";
 import OneGenre from "./components/OneGenre";
 import OneMovie from "./components/OneMovie";
 import OneMovieGraphQL from "./components/OneMovieGraphQL";
@@ -110,7 +110,7 @@ export default class App extends Component {
                   component={(props) => <OneMovieGraphQL {...props} />}
                 />
                 <Route path="/movies">
-                  <Movies />
+                  <MoviesFunc />
                 </Route>
 
                 <Route
